@@ -11,6 +11,14 @@ SET restartTimeout=60
 REM Load configuration file
 FOR /f "delims=" %%x IN (miner.cfg) DO (SET "%%x")
 
+REM Set variables
+SET _version=0.1
+SET _miner_app=ethminer.exe
+SET _miner_args=-R -P %protocol%://%wallet%.%workername%@%pool%
+SET _start_after=10
+
+TITLE Ethminer-Script v%_version%
+
 ECHO #-------------------------------------------
 ECHO # Configuration:
 ECHO #-------------------------------------------
@@ -25,16 +33,16 @@ ECHO #
 ECHO # Starting miner in 10 Seconds... Abort(Close or Ctrl + C) when settings are wrong 
 ECHO #
 
-timeout /t 10 /nobreak > NUL
+timeout /t %_start_after% /nobreak > NUL
 
 ECHO Starting miner!
 
 :START_MINER
-ethminer.exe -R -P %protocol%://%wallet%.%workername%@%pool%
+%_miner_app% %_miner_args%
 IF [%restart%] == [true] (
 	ECHO Restarting miner in %restartTimeout% seconds...
 	timeout /t %restartTimeout% /nobreak > NUL
 	GOTO START_MINER
 )
 
-ECHO Miner closed!
+ECHO Miner-Script closed!
