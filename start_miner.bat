@@ -29,7 +29,7 @@ if [%logging%] == [none] (
 )
 
 REM Set internal variables
-SET _version=0.1
+SET _version=0.2
 SET _miner_app=ethminer.exe
 SET _miner_args=-R -P %protocol%://%wallet%.%workername%@%pool%
 SET _start_after=10
